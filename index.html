@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-left">
+                <div class="menu-icon">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+                <div class="logo">
+                    <i class="fa-brands fa-youtube"></i>
+                    <span>YouTube<sup>ZA</sup></span>
+                </div>
+            </div>
+
+            <div class="header-center">
+                <div class="search-container">
+                    <input type="text" placeholder="Search">
+                </div>
+                <button class="search-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <div class="mic-btn">
+                    <i class="fa-solid fa-microphone"></i>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <div class="icon-btn">
+                    <i class="fa-solid fa-video"></i>
+                </div>
+                <div class="icon-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Profile" class="profile-pic">
+            </div>
+        </header>
+
+        <main>
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-item active">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Home</span>
+                </div>
+                <div class="sidebar-item">
+                    <i class="fa-solid fa-play"></i>
+                    <span>Shorts</span>
+                </div>
+                <div class="sidebar-item">
+                    <i class="fa-solid fa-rectangle-list"></i>
+                    <span>Subscriptions</span>
+                </div>
+
+                <div class="sidebar-divider"></div>
+
+                <div class="sidebar-title">You <i class="fa-solid fa-chevron-right"
+                        style="font-size: 1rem; margin-left: 8px;"></i></div>
+                <div class="sidebar-item">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>History</span>
+                </div>
+                <div class="sidebar-item">
+                    <i class="fa-solid fa-list-ul"></i>
+                    <span>Playlists</span>
+                </div>
+                <div class="sidebar-item">
+                    <i class="fa-solid fa-clock"></i>
+                    <span>Watch Later</span>
+                </div>
+                <div class="sidebar-item">
+                    <i class="fa-solid fa-thumbs-up"></i>
+                    <span>Liked videos</span>
+                </div>
+                <div class="sidebar-item">
+                    <i class="fa-solid fa-circle-play"></i>
+                    <span>Your videos</span>
+                </div>
+                <div class="sidebar-item">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Downloads</span>
+                </div>
+
+                <div class="sidebar-divider"></div>
+
+                <div class="sidebar-title">Explore</div>
+                <div class="sidebar-item">
+                    <i class="fa-solid fa-music"></i>
+                    <span>Music</span>
+                </div>
+                <div class="sidebar-item">
+                    <i class="fa-solid fa-gamepad"></i>
+                    <span>Gaming</span>
+                </div>
+                <div class="sidebar-item">
+                    <i class="fa-solid fa-newspaper"></i>
+                    <span>News</span>
+                </div>
+                <div class="sidebar-item">
+                    <i class="fa-solid fa-chevron-down"></i>
+                    <span>Show more</span>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <section class="content">
+                <!-- Filter Chips -->
+                <div class="filter-chips">
+                    <div class="chip active">All</div>
+                    <div class="chip">JavaScript</div>
+                    <div class="chip">AI</div>
+                    <div class="chip">Next.js</div>
+                    <div class="chip">Music</div>
+                    <div class="chip">Gaming</div>
+                    <div class="chip">Live</div>
+                    <div class="chip">Programming</div>
+                    <div class="chip">Vlog</div>
+                    <div class="chip">Recently uploaded</div>
+                    <div class="chip">Watched</div>
+                    <div class="chip">New to you</div>
+                </div>
+
+                <div class="video-grid" id="video-grid">
+                    <!-- Video cards will be generated here -->
+                </div>
+
+                <!-- Playlist Section -->
+                <div class="playlist-section" id="playlist-section">
+                    <h2 style="margin-bottom: 24px; font-size: 2.4rem;">Your Playlists</h2>
+                    <div class="playlist-grid" id="playlist-grid">
+                        <!-- Playlists will be generated here -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Mock data for videos
+        const videos = [
+            {
+                id: 1,
+                title: "Build and Deploy a Premium AI SaaS Platform",
+                description: "Master AI engineering by building this multi-tenant SaaS platform with Next.js 14 and LangChain.",
+                thumbnail: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800",
+                channelIcon: "https://api.dicebear.com/7.x/avataaars/svg?seed=JSM",
+                channelName: "JavaScript Mastery",
+                views: "1.2M views",
+                time: "2 days ago",
+                duration: "12:45",
+                progress: 75,
+                isTrending: true
+            },
+            {
+                id: 2,
+                title: "Next.js 14 Full Course 2024",
+                description: "The ultimate guide to Next.js 14. Learn App Router, Server Actions, and more in this massive course.",
+                thumbnail: "https://images.unsplash.com/photo-1618477247222-acbdb0e159b3?auto=format&fit=crop&q=80&w=800",
+                channelIcon: "https://api.dicebear.com/7.x/avataaars/svg?seed=Traversy",
+                channelName: "Traversy Media",
+                views: "850K views",
+                time: "1 week ago",
+                duration: "4:20:15",
+                progress: 30,
+                isTrending: false
+            },
+            {
+                id: 3,
+                title: "Why Neovim is amazing in 2024",
+                description: "Is Neovim still the king of editors? Let's dive into the current state of the ecosystem.",
+                thumbnail: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800",
+                channelIcon: "https://api.dicebear.com/7.x/avataaars/svg?seed=Prime",
+                channelName: "ThePrimeagen",
+                views: "420K views",
+                time: "5 hours ago",
+                duration: "15:32",
+                progress: 100,
+                isTrending: true
+            },
+            {
+                id: 4,
+                title: "The Future of Web Development",
+                description: "Web development is changing faster than ever. Here is what you need to know for 2024.",
+                thumbnail: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800",
+                channelIcon: "https://api.dicebear.com/7.x/avataaars/svg?seed=Fire",
+                channelName: "Fireship",
+                views: "2.1M views",
+                time: "1 day ago",
+                duration: "3:45",
+                progress: 0,
+                isTrending: true
+            },
+            {
+                id: 5,
+                title: "Clean Code with Python",
+                description: "Stop writing messy Python. Follow these industry standards for maintainable code.",
+                thumbnail: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&q=80&w=800",
+                channelIcon: "https://api.dicebear.com/7.x/avataaars/svg?seed=Py",
+                channelName: "Python Hub",
+                views: "120K views",
+                time: "3 days ago",
+                duration: "22:15",
+                progress: 15,
+                isTrending: false
+            },
+            {
+                id: 6,
+                title: "Understanding CSS Grid in depth",
+                description: "Master advanced CSS Grid layouts. No more struggling with complex designs.",
+                thumbnail: "https://images.unsplash.com/photo-1507721963914-8fef46662810?auto=format&fit=crop&q=80&w=800",
+                channelIcon: "https://api.dicebear.com/7.x/avataaars/svg?seed=CSS",
+                channelName: "CSS Tricks",
+                views: "300K views",
+                time: "2 weeks ago",
+                duration: "18:05",
+                progress: 90,
+                isTrending: false
+            },
+            {
+                id: 7,
+                title: "Microservices Architecture Explained",
+                description: "What are microservices? Learn the pros, cons, and implementation strategies.",
+                thumbnail: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800",
+                channelIcon: "https://api.dicebear.com/7.x/avataaars/svg?seed=Cloud",
+                channelName: "Cloud Native",
+                views: "95K views",
+                time: "1 month ago",
+                duration: "35:20",
+                progress: 60,
+                isTrending: false
+            },
+            {
+                id: 8,
+                title: "MacOS Sonoma - 10 New Features",
+                description: "MKBHD breaks down the best new features in MacOS Sonoma. Is it worth the upgrade?",
+                thumbnail: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800",
+                channelIcon: "https://api.dicebear.com/7.x/avataaars/svg?seed=Apple",
+                channelName: "MKBHD",
+                views: "5.6M views",
+                time: "3 hours ago",
+                duration: "10:12",
+                progress: 45,
+                isTrending: true
+            }
+        ];
+
+        const playlists = [
+            { title: "Frontend Development", count: 24, thumbnail: videos[0].thumbnail },
+            { title: "AI & Machine Learning", count: 12, thumbnail: videos[3].thumbnail },
+            { title: "UI/UX Design", count: 8, thumbnail: videos[5].thumbnail },
+            { title: "Backend Systems", count: 15, thumbnail: videos[6].thumbnail }
+        ];
+
+        const videoGrid = document.getElementById('video-grid');
+        const playlistSection = document.getElementById('playlist-section');
+        const playlistGrid = document.getElementById('playlist-grid');
+        const themeToggle = document.getElementById('theme-toggle');
+        const homeItem = document.querySelector('.sidebar-item:nth-child(1)');
+        const playlistsItem = document.querySelector('.sidebar-item:nth-child(7)'); // Updated index for Playlists
+
+        // Theme Logic
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.documentElement.classList.add('light-mode');
+                themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('light-mode');
+            const isLight = document.documentElement.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            themeToggle.innerHTML = isLight ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+        });
+
+        // View Toggling Logic
+        function toggleView(view) {
+            if (view === 'playlists') {
+                videoGrid.style.display = 'none';
+                playlistSection.classList.add('active');
+                playlistsItem.classList.add('active');
+                homeItem.classList.remove('active');
+            } else {
+                videoGrid.style.display = 'grid';
+                playlistSection.classList.remove('active');
+                playlistsItem.classList.remove('active');
+                homeItem.classList.add('active');
+            }
+        }
+
+        playlistsItem.addEventListener('click', () => toggleView('playlists'));
+        homeItem.addEventListener('click', () => toggleView('home'));
+
+        // Generate Videos
+        function renderVideos() {
+            videoGrid.innerHTML = '';
+            for (let i = 0; i < 12; i++) {
+                const video = videos[i % videos.length];
+                const videoCard = document.createElement('div');
+                videoCard.className = 'video-card';
+                videoCard.innerHTML = `
+                    <div class="thumbnail-container">
+                        ${video.isTrending ? '<div class="trending-badge">Trending</div>' : ''}
+                        <img src="${video.thumbnail}" alt="Thumbnail">
+                        <div class="duration">${video.duration}</div>
+                        
+                        <!-- Progress Bar -->
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: ${video.progress}%">
+                                <div class="progress-indicator"></div>
+                            </div>
+                        </div>
+
+                        <!-- Hover Info Overlays -->
+                        <div class="hover-preview-overlay">
+                            <span class="preview-tag">Previewing...</span>
+                        </div>
+                        
+                        <div class="hover-info">
+                            <p class="hover-description">${video.description}</p>
+                            <button class="watch-later-btn">
+                                <i class="fa-solid fa-clock"></i> Watch Later
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <img src="${video.channelIcon}" alt="Channel" class="channel-icon">
+                        <div class="detail-info">
+                            <h3 class="video-title">${video.title}</h3>
+                            <div class="channel-name">${video.channelName}</div>
+                            <div class="video-stats">${video.views} • ${video.time}</div>
+                        </div>
+                    </div>
+                `;
+                videoGrid.appendChild(videoCard);
+            }
+        }
+
+        // Generate Playlists
+        function renderPlaylists() {
+            playlistGrid.innerHTML = '';
+            playlists.forEach(pl => {
+                const plCard = document.createElement('div');
+                plCard.className = 'playlist-card';
+                plCard.innerHTML = `
+                    <div class="playlist-thumbnail">
+                        <img src="${pl.thumbnail}" alt="Playlist">
+                        <div class="playlist-overlay">
+                            <i class="fa-solid fa-list-ul" style="font-size: 2.4rem; margin-bottom: 8px;"></i>
+                            <span style="font-size: 1.4rem;">${pl.count}</span>
+                        </div>
+                    </div>
+                    <div class="playlist-info">
+                        <h3 class="playlist-title">${pl.title}</h3>
+                        <div class="playlist-count">Playlist • ${pl.count} videos</div>
+                    </div>
+                `;
+                playlistGrid.appendChild(plCard);
+            });
+        }
+
+        // Initialize
+        initTheme();
+        renderVideos();
+        renderPlaylists();
+    </script>
+</body>
+
+</html>
